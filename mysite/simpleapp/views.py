@@ -1,14 +1,22 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404
 from .models import Question
+from django.template import loader
+
 # Create your views here.
 def index (request):
     ques_list=Question.objects.order_by('-pub_date')
     out=', '.join([q.question_text for q in ques_list])
-    return HttpResponse(out)
+
+    context = {
+        'ques_list': ques_list,
+    }
+
+    return render(request, 'simpleapp/index.html', context)
 
 def detail(request,question_id):
-    return HttpResponse("You're looking at question %s." % question_id) 
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'simpleapp/detail.html', {'question': question})
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."
