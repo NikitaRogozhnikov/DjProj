@@ -13,19 +13,17 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    
 
-
-class Choise(models.Model):
+class Choice(models.Model):
 
     question=models.ForeignKey(Question,on_delete=models.CASCADE)
-    choise_text=models.CharField(max_length=200)
+    choice_text=models.CharField(max_length=200)
     votes=models.IntegerField(default=0)
 
     class Meta:
-        verbose_name = "Choise"
-        verbose_name_plural = "Choises"
+        verbose_name = "Choice"
+        verbose_name_plural = "Choices"
 
     def __str__(self):
         return self.question
-
-
